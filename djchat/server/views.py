@@ -5,12 +5,14 @@ from rest_framework.exceptions import AuthenticationFailed, ValidationError
 from rest_framework.response import Response
 
 from .models import Server
+from .schema import server_list_docs
 from .serializer import ServerSerializer
 
 
 class ServerListViewSet(viewsets.ViewSet):
     queryset = Server.objects.all()
 
+    @server_list_docs
     def list(self, request):
         """Retrieve a list of servers based on query parameters.
 
@@ -47,8 +49,8 @@ class ServerListViewSet(viewsets.ViewSet):
         with_num_members = request.query_params.get("with_num_members") == "true"
 
         # Check authentication if filtering by user or server ID
-        if by_user or by_serverid and not request.user.is_authenticated:
-            raise AuthenticationFailed()
+        # if by_user or by_serverid and not request.user.is_authenticated:
+        #     raise AuthenticationFailed()
 
         # Apply filtering based on the category
         if category:
@@ -56,8 +58,11 @@ class ServerListViewSet(viewsets.ViewSet):
 
         # Apply filtering based on the user ID
         if by_user:
-            user_id = request.user.id
-            self.queryset = self.queryset.filter(member=user_id)
+            if by_user and not request.user.is_authenticated:
+                user_id = request.user.id
+                self.queryset = self.queryset.filter(member=user_id)
+            else:
+                raise AuthenticationFailed()
 
         # Annotate the queryset with the count of members if requested
         if with_num_members:
@@ -69,6 +74,9 @@ class ServerListViewSet(viewsets.ViewSet):
 
         # Filter the queryset based on server ID if provided
         if by_serverid:
+            if not request.user.is_authenticated:
+                raise AuthenticationFailed()
+
             try:
                 self.queryset = self.queryset.filter(id=by_serverid)
                 if not self.queryset.exists():
