@@ -9,7 +9,7 @@ const Main = () => {
 				flexGrow: 1,
 				mt: `${theme.primaryAppBar.height}px`,
 				height: `calc(100vh - ${theme.primaryAppBar.height}px)`,
-				oveflow: 'hidden',
+				// oveflow: 'hidden',
 			}}
 		>
 			{[...Array(50)].map((_, i) => (

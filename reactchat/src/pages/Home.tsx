@@ -6,7 +6,7 @@ import SecondaryDraw from './template/SecondaryDraw';
 import Main from './template/Main';
 
 const Home = () => (
-	<Box sx={{ display: 'flex' }}>
+	<Box sx={{ display: 'flex', overflow: 'hidden' }}>
 		<CssBaseline />
 		<PrimaryAppBar />
 		<PrimaryDraw />
