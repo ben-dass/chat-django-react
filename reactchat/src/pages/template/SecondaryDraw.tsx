@@ -1,7 +1,17 @@
 import { Box, Typography, useTheme } from '@mui/material';
+import axios from 'axios';
 
 const SecondaryDraw = () => {
 	const theme = useTheme();
+
+	axios
+		.get('http://localhost:8000/api/server/select/?category=cat1')
+		.then((response) => {
+			console.log(response.data);
+		})
+		.catch((error) => {
+			console.log(error);
+		});
 
 	return (
 		<Box
