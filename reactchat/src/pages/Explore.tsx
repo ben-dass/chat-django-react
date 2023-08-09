@@ -8,12 +8,12 @@ import Main from './template/Main';
 import ExploreCategories from '../components/SecondaryDrawer/ExploreCategories';
 import ExploreServer from '../components/Main/ExploreServer';
 
-const Home = () => (
+const Explore = () => (
 	<Box sx={{ display: 'flex', overflow: 'hidden' }}>
 		<CssBaseline />
 		<PrimaryAppBar />
 		<PrimaryDraw>
-			<PopularChannels open={true} />
+			<PopularChannels open={false} />
 		</PrimaryDraw>
 		<SecondaryDraw>
 			<ExploreCategories />
@@ -24,4 +24,4 @@ const Home = () => (
 	</Box>
 );
 
-export default Home;
+export default Explore;

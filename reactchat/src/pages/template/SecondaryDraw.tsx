@@ -1,17 +1,11 @@
-import { Box, Typography, useTheme } from '@mui/material';
-import axios from 'axios';
+import { Box, useTheme } from '@mui/material';
 
-const SecondaryDraw = () => {
+type SecondaryDrawProps = {
+	children: React.ReactNode;
+};
+
+const SecondaryDraw = ({ children }: SecondaryDrawProps) => {
 	const theme = useTheme();
-
-	axios
-		.get('http://localhost:8000/api/server/select/?category=cat1')
-		.then((response) => {
-			console.log(response.data);
-		})
-		.catch((error) => {
-			console.log(error);
-		});
 
 	return (
 		<Box
@@ -20,18 +14,11 @@ const SecondaryDraw = () => {
 				height: `calc(100vh - ${theme.primaryAppBar.height}px)`,
 				minWidth: `${theme.secondaryDraw.width}px`,
 				borderRight: `1px solid ${theme.palette.divider}`,
-				display: { sx: 'none', xs: 'block' },
+				display: { xs: 'none', sm: 'block' },
 				overflow: 'auto',
 			}}
 		>
-			{[...Array(50)].map((_, i) => (
-				<Typography
-					key={i}
-					paragraph
-				>
-					{i + 1}
-				</Typography>
-			))}
+			{children}
 		</Box>
 	);
 };
